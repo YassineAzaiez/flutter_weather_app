@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-
-void main() {
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:weath_app/core/utils/di/app_component.dart';
+import 'package:weath_app/l10n/support_locale.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  //await initAppComponentLocator();
   runApp(const MyApp());
 }
 
@@ -11,6 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: L10n.support,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
