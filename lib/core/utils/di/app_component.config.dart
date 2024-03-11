@@ -18,6 +18,7 @@ import 'package:weath_app/data/data_source/weather_remote_datasource_impl.dart'
 import 'package:weath_app/data/repositories/weather_repository_impl.dart'
     as _i7;
 import 'package:weath_app/domain/repositories/weather_repository.dart' as _i6;
+import 'package:weath_app/presentation/weather_app_view_model.dart' as _i8;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,6 +37,8 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i5.WeatherRemoteDataSourceImpl(gh<_i3.ApiHelper>()));
     gh.factory<_i6.WeatherRepository>(() => _i7.WeatherRepositoryImpl(
         remoteDataSource: gh<_i4.WeatherRemoteDataSource>()));
+    gh.factory<_i8.WeatherAppViewModel>(
+        () => _i8.WeatherAppViewModel(gh<_i6.WeatherRepository>()));
     return this;
   }
 }

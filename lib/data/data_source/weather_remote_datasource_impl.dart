@@ -34,7 +34,7 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
         success: (Response response) {
           return ApiResult<WeatherInfoResponseModel>.success(
             data: WeatherInfoResponseModel.fromJson(
-              response.extra,
+              response.data,
             ),
           );
         },
