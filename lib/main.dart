@@ -4,10 +4,10 @@ import 'package:weath_app/core/utils/routing_config/auto_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:weath_app/l10n/support_locale.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'generated/l10n.dart';
-import 'presentation/weather_app_view_model.dart';
+import 'presentation/views/add_city/add_city_view_model.dart';
+import 'presentation/views/weather_details/weather_app_view_model.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await initAppComponentLocator();
@@ -31,6 +31,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<WeatherAppViewModel>(
           create: (BuildContext context) => locator<WeatherAppViewModel>(),
+        ),
+        ChangeNotifierProvider<AddCityViewModel>(
+          create: (BuildContext context) => locator<AddCityViewModel>(),
         ),
       ],
       child: MaterialApp.router(

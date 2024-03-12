@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weath_app/core/utils/networkHelper/api_result_model.dart';
 import 'package:weath_app/core/utils/networkHelper/error.dart';
+import 'package:weath_app/core/utils/routing_config/auto_router.gr.dart';
 import 'package:weath_app/domain/entities/weather_info_entity.dart';
 import 'package:weath_app/domain/requestes/weather_by_coordinates_request.dart';
-import 'package:weath_app/presentation/weather_app_view_model.dart';
+import 'package:weath_app/presentation/views/weather_details/weather_app_view_model.dart';
 import 'package:weath_app/generated/l10n.dart';
 import 'package:weath_app/presentation/widgets/weather_info_details_widget.dart';
 import 'package:weath_app/presentation/widgets/weather_info_widget.dart';
@@ -38,7 +39,11 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
                 color:  Colors.black87,
               ),
 
-              onPressed: (){}
+              onPressed: (){
+                context.router.push(
+                  const AddCityView()
+                );
+              }
           ),
           appBar: AppBar(
             centerTitle: true,
@@ -199,7 +204,7 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
             }
           },
           error: (Failure error) {
-
+            // TODO add snack bar for error cases
           },
         );
       },

@@ -59,6 +59,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Add/view cities`
+  String get weather_add_new_city_title {
+    return Intl.message(
+      'Add/view cities',
+      name: 'weather_add_new_city_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City Latitude`
+  String get city_latitude {
+    return Intl.message(
+      'City Latitude',
+      name: 'city_latitude',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City Name`
+  String get city_name {
+    return Intl.message(
+      'City Name',
+      name: 'city_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City Longitude`
+  String get city_longitude {
+    return Intl.message(
+      'City Longitude',
+      name: 'city_longitude',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add City`
+  String get add_new_city {
+    return Intl.message(
+      'Add City',
+      name: 'add_new_city',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

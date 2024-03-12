@@ -1,4 +1,9 @@
 {
   "@@locale": "en",
-  "weather_details": "Weather Details"
+  "weather_details": "Weather Details",
+  "weather_add_new_city_title": "Add/view cities",
+  "city_latitude" : "City Latitude",
+  "city_name" : "City Name",
+  "city_longitude" : "City Longitude",
+  "add_new_city" : "Add City"
 }

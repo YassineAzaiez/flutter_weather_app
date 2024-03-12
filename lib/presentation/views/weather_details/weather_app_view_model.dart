@@ -13,6 +13,7 @@ class WeatherAppViewModel extends ChangeNotifier {
 
   final WeatherRepository _weatherRepository;
 
+
   final StreamController<ApiResult<WeatherInfoEntity>> _weatherResult =
       StreamController<ApiResult<WeatherInfoEntity>>.broadcast();
 

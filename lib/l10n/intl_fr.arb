@@ -1,4 +1,9 @@
 {
   "@@locale": "fr",
-  "weather_details": "Détails météo"
+  "weather_details": "Détails météo",
+  "weather_add_new_city_title": "Ajouter/afficher des villes",
+  "city_latitude" : "Latitude de la ville",
+  "city_name" : "Nom de Ville",
+  "city_longitude" : "Longitude de la ville",
+  "add_new_city" : "Ajouter ville"
 }

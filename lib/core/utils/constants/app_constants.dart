@@ -4,3 +4,7 @@ const String loKey = 'lon';
 const String appId = 'appid';
 const baseUrl = 'https://api.openweathermap.org/data/2.5/';
 const getWeatherInfo = 'weather';
+
+
+//secure storage
+const String getSavedCitiesKey = 'getSavedCitiesKey';
