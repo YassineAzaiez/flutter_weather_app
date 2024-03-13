@@ -3,12 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:weath_app/core/utils/networkHelper/api_result_model.dart';
 import 'package:weath_app/core/utils/networkHelper/error.dart';
+import 'package:weath_app/core/utils/routing_config/auto_router.gr.dart';
 import 'package:weath_app/core/values/colors.dart';
 import 'package:weath_app/domain/entities/city_entity.dart';
 import 'package:weath_app/generated/l10n.dart';
 import 'package:weath_app/presentation/views/add_city/add_city_view_model.dart';
+import 'package:weath_app/presentation/widgets/new_city_item_widget.dart';
 import 'package:weath_app/presentation/widgets/weather_app_text_field.dart';
 
 @RoutePage()
@@ -56,9 +59,10 @@ class _AddCityViewState extends State<AddCityView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AddCityViewModel>(
-      builder: (BuildContext context, AddCityViewModel provider, Widget? child) =>
-          SafeArea(
-              child: Scaffold(
+      builder:
+          (BuildContext context, AddCityViewModel provider, Widget? child) =>
+              SafeArea(
+                  child: Scaffold(
         appBar: AppBar(
           title: Text(S.of(context).weather_add_new_city_title),
           centerTitle: true,
@@ -83,53 +87,72 @@ class _AddCityViewState extends State<AddCityView> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Column(
-                children: [
-                  WeatherAppTextFieldWidget(
-                      onValueChanged: (value) {
-                        provider.lat = value;
-                      },
-                      inputType: TextInputType.number,
-                      lablel: S.current.city_latitude),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  WeatherAppTextFieldWidget(
-                      onValueChanged: (value) {
-                        provider.long = value;
-                      },
-                      inputType: TextInputType.number,
-                      lablel: S.current.city_longitude),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  WeatherAppTextFieldWidget(
-                    onValueChanged: (value) {
-                      provider.cityName = value;
-                    },
-                    lablel: S.current.city_name,
-                    inputType: TextInputType.text,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      style: TextButton.styleFrom(
-                          foregroundColor: Colors.blue,
-                          textStyle: const TextStyle(fontSize: 18)),
-                      onPressed: () {
-                        provider.submitForm();
-                      },
-                      child: Text(S.current.add_new_city),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                ],
-              )
+              WeatherAppTextFieldWidget(
+                  onValueChanged: (value) {
+                    provider.lat = value;
+                  },
+                  inputType: TextInputType.number,
+                  lablel: S.current.city_latitude),
+              const SizedBox(
+                height: 16,
+              ),
+              WeatherAppTextFieldWidget(
+                  onValueChanged: (value) {
+                    provider.long = value;
+                  },
+                  inputType: TextInputType.number,
+                  lablel: S.current.city_longitude),
+              const SizedBox(
+                height: 16,
+              ),
+              WeatherAppTextFieldWidget(
+                onValueChanged: (value) {
+                  provider.cityName = value;
+                },
+                lablel: S.current.city_name,
+                inputType: TextInputType.text,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.blue,
+                      textStyle: const TextStyle(fontSize: 18)),
+                  onPressed: () {
+                    provider.submitForm();
+                  },
+                  child: Text(S.current.add_new_city),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: _result.length,
+                    itemBuilder: (_, int index) {
+                      return Padding(
+                        padding:
+                            const EdgeInsets.symmetric(vertical: 16),
+                        child: NewCityItemWidget(
+                          cityLat: _result[index].lat,
+                          cityLong: _result[index].lon,
+                          cityName: _result[index].cityName,
+                          onItemClicked: () {
+                            context.router.push(WeatherDetailsView(
+                                lon: double.parse(_result[index].lon),
+                                lat: double.parse(_result[index].lat)));
+                          },
+                        ),
+                      );
+                    }),
+              ),
             ],
           ),
         ),
@@ -138,13 +161,13 @@ class _AddCityViewState extends State<AddCityView> {
   }
 
   @override
-  void initState()  {
+  void initState() {
     final AddCityViewModel provider =
         Provider.of<AddCityViewModel>(context, listen: false);
     _listenToWeatherDetails(provider);
     _listenTOAddCity(provider);
 
-     provider.getSavesCitiesList();
+    provider.getSavesCitiesList();
     super.initState();
   }
 }

@@ -74,12 +74,22 @@ class WeatherRepositoryImpl implements WeatherRepository {
   @override
   Future<ApiResult<bool>> saveCity(CityEntity city) async {
     try {
-      return await weatherAppSecureStorage
-          .setField(getSavedCitiesKey, json.encode(city))
-          .then(
-            (_) => const ApiResult<bool>.success(data: true),
-          );
-    } on Exception catch (error) {
+      // Retrieve the existing list of cities from SharedPreferences
+     List<CityEntity> cities = await _getSavedCities();
+
+      // Add the new city to the existing list
+      cities.add(city);
+
+      // Convert the list of cities to JSON
+      String citiesJson = json.encode(cities);
+
+      // Save the updated list to SharedPreferences
+      await weatherAppSecureStorage.setField(getSavedCitiesKey, citiesJson);
+
+      // Return success
+      return const ApiResult<bool>.success(data: true);
+    } catch (error) {
+      // Return error if any exception occurs
       return ApiResult<bool>.error(
         errorResult: Failure(
           message: error.toString(),
@@ -87,4 +97,25 @@ class WeatherRepositoryImpl implements WeatherRepository {
       );
     }
   }
+
+// Method to retrieve the existing list of cities from SharedPreferences
+  Future<List<CityEntity>> _getSavedCities() async {
+    String citiesJson =
+        await weatherAppSecureStorage.getField(getSavedCitiesKey) ?? '';
+    if (citiesJson.isNotEmpty) {
+      // Convert JSON to list of cities
+      dynamic decodedJson = json.decode(citiesJson);
+      List<CityEntity> cities = fromJsonToList(
+        decodedJson,
+        (dynamic entity) => CityEntity.fromJson(entity),
+      );
+      return cities;
+    } else {
+      return []; // Return an empty list if no cities are found
+    }
+  }
+
+  List<T> fromJsonToList<T>(
+          dynamic decodedJson, T Function(dynamic) fromJson) =>
+      List<T>.from(decodedJson.map((dynamic entity) => fromJson(entity)));
 }

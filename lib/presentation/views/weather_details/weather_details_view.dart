@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:weath_app/core/utils/networkHelper/api_result_model.dart';
 import 'package:weath_app/core/utils/networkHelper/error.dart';
@@ -32,19 +34,6 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
           (BuildContext context, WeatherAppViewModel value, Widget? child) =>
               SafeArea(
         child: Scaffold(
-          floatingActionButton:  FloatingActionButton(
-              elevation: 0.0,
-              child:  const Icon(
-                Icons.add,
-                color:  Colors.black87,
-              ),
-
-              onPressed: (){
-                context.router.push(
-                  const AddCityView()
-                );
-              }
-          ),
           appBar: AppBar(
             centerTitle: true,
             title: Text(S.of(context).weather_details),
@@ -55,27 +44,26 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
             AnimatedOpacity(
             opacity: 1,
             duration: const Duration(milliseconds: 200),
-            child: Expanded(
-              child: Container(
-                color: Colors.transparent,
-                child: Center(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    padding: const EdgeInsets.all(
-                      15,
-                    ),
-                    width: 70,
-                    height: 70,
-                    child: const CircularProgressIndicator(),
+            child: Container(
+              color: Colors.transparent,
+              child: Center(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
                   ),
+                  padding: const EdgeInsets.all(
+                    15,
+                  ),
+                  width: 70,
+                  height: 70,
+                  child: const CircularProgressIndicator(),
                 ),
               ),
             ),
           )
 
              :  Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
@@ -134,7 +122,7 @@ class _WeatherDetailsViewState extends State<WeatherDetailsView> {
                     ],),
                   ),
                   const SizedBox(
-                    height: 16
+                    height: 32
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
